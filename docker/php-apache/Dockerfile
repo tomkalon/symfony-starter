@@ -10,12 +10,13 @@ RUN docker-php-ext-configure intl
 RUN docker-php-ext-configure gd '--with-jpeg' '--with-freetype'
 RUN docker-php-ext-install intl opcache pdo_mysql zip gd
 RUN pecl install xdebug
-RUN a2enmod rewrite
 
 #INI-Files
 RUN mv $PHP_INI_DIR/php.ini-development $PHP_INI_DIR/php.ini
 COPY opcache.ini $PHP_INI_DIR/conf.d/docker-php-ext-opcache.ini
 COPY xdebug.ini $PHP_INI_DIR/conf.d/99-xdebug.ini
+COPY apache.conf /etc/apache2/sites-enabled/000-default.conf
+RUN a2enmod rewrite
 
 #INSTALL APCU
 RUN pecl install apcu-5.1.22 && docker-php-ext-enable apcu
@@ -25,7 +26,6 @@ RUN echo "apc.enable=1" > /usr/local/etc/php/php.ini
 #APCU
 
 # Install yarn
-RUN apt-get update
 RUN apt-get install -y ca-certificates curl gnupg
 RUN mkdir -p /etc/apt/keyrings
 RUN curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg
@@ -40,6 +40,6 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 # Install Symfony CLI
 RUN curl -sS https://get.symfony.com/cli/installer | bash && mv /root/.symfony5/bin/symfony /usr/local/bin/symfony
 
-# Install Ubuntu apps
+# Install Utility
 RUN apt-get install nano -y
 RUN apt-get install mc -y
