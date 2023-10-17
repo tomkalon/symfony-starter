@@ -2,16 +2,16 @@ version: "3"
 
 services:
   php-apache:
-    container_name: "${CONTAINER_NAME_PREFIX}-apache"
+    container_name: "apache-${PROJECT_NAME}"
     restart: unless-stopped
     build: ./docker/php-apache
     volumes:
       - ${PATH_TO_SYMFONY_PROJECT}:/var/www/html
     ports:
-      - 85:80
+      - "85:80"
   
   db:
-    container_name: "${CONTAINER_NAME_PREFIX}-mariadb"
+    container_name: "mariadb-${PROJECT_NAME}"
     restart: unless-stopped
     image: mariadb:10.11.5
     environment:
@@ -23,9 +23,10 @@ services:
     volumes:
       - ${PATH_TO_DB_DATA}:/var/lib/mysql:rw
     ports:
-      - 3306:3306
+      - "3306:3306"
   
   redis:
+    container_name: "redis-${PROJECT_NAME}"
     image: redis:alpine3.18
     restart: unless-stopped
     environment:
@@ -33,6 +34,7 @@ services:
 
 ###> symfony/mercure-bundle ###
   mercure:
+    container_name: "mercure-${PROJECT_NAME}"
     image: dunglas/mercure
     restart: unless-stopped
     environment:
