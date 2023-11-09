@@ -8,7 +8,7 @@ services:
     volumes:
       - ${PATH_TO_SYMFONY_PROJECT}:/var/www/html
     ports:
-      - "85:80"
+      - "80:80"
   
   db:
     container_name: "mariadb-${PROJECT_NAME}"
