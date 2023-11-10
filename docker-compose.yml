@@ -25,6 +25,14 @@ services:
     ports:
       - "3306:3306"
   
+  node:
+    container_name: "nodejs-${PROJECT_NAME}"
+    restart: unless-stopped
+    build: ./docker/node
+    tty: true
+    volumes:
+      - ${PATH_TO_SYMFONY_PROJECT}:/var/www/html
+  
   redis:
     container_name: "redis-${PROJECT_NAME}"
     image: redis:alpine3.18
