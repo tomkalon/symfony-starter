@@ -5,9 +5,9 @@ RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-av
 RUN sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
 
 #Install Packages
-RUN apt-get -y update && apt-get install -y libicu-dev libzip-dev zip libjpeg-dev libpng-dev libfreetype6-dev
+RUN apt-get -y update && apt-get install -y libicu-dev libzip-dev zip libjpeg-dev libpng-dev libfreetype6-dev libwebp-dev
 RUN docker-php-ext-configure intl
-RUN docker-php-ext-configure gd '--with-jpeg' '--with-freetype'
+RUN docker-php-ext-configure gd --enable-gd --with-freetype --with-jpeg --with-webp
 RUN docker-php-ext-install intl opcache pdo_mysql zip gd
 RUN pecl install xdebug
 
@@ -25,15 +25,6 @@ RUN echo "apc.enable_cli=1" > /usr/local/etc/php/php.ini
 RUN echo "apc.enable=1" > /usr/local/etc/php/php.ini
 #APCU
 
-# Install yarn
-RUN apt-get install -y ca-certificates curl gnupg
-RUN mkdir -p /etc/apt/keyrings
-RUN curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg
-RUN echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_20.x nodistro main" | tee /etc/apt/sources.list.d/nodesource.list
-RUN apt-get update
-RUN apt-get install nodejs -y
-RUN npm -g install yarn
-
 # Install Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
@@ -43,3 +34,9 @@ RUN curl -sS https://get.symfony.com/cli/installer | bash && mv /root/.symfony5/
 # Install Utility
 RUN apt-get install nano -y
 RUN apt-get install mc -y
+
+# History
+RUN echo "composer update" >> ~/.bash_history
+RUN echo "symfony console" >> ~/.bash_history
+RUN echo "symfony console make:migration" >> ~/.bash_history
+RUN echo "symfony console doctrine:migrations:migrate" >> ~/.bash_history
