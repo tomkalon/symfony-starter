@@ -1,0 +1,4 @@
+admin_web_panel_index:
+  path: /admin/
+  methods: [ GET ]
+  controller: App\Admin\Panel\Controller\WebPanelController::index

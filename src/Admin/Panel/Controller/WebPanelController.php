@@ -8,7 +8,6 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class WebPanelController extends AbstractController
 {
-    #[Route('/', name: 'main_web_index')]
     public function index(): Response
     {
         return $this->render('main/index.html.twig', [

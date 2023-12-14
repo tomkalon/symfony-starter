@@ -4,8 +4,7 @@ module.exports = {
     content: [
         "./assets/**/*.js",
         "./templates/**/**/**/*.html.twig",
-        "./src/Main/Domain/Form/**/**/*.php",
-        "./src/Admin/Domain/Form/**/**/*.php",
+        "./src/Main/**/Form/*.php",
         "./node_modules/tw-elements/dist/js/**/*.js"
     ],
     theme: {
