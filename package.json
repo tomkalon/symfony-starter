@@ -28,7 +28,7 @@
         "build": "encore production --progress"
     },
     "dependencies": {
-      "fontawesome-4.7": "^4.7.0",
-      "tw-elements": "^1.1.0"
+        "fontawesome-4.7": "^4.7.0",
+        "tw-elements": "^1.1.0"
     }
 }

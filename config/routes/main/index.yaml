@@ -1,0 +1,4 @@
+main_web_frontpage_index:
+  path: /
+  methods: [ GET ]
+  controller: App\Main\FrontPage\Controller\WebFrontPageController::index

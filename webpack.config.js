@@ -20,7 +20,22 @@ Encore
      * Each entry will result in one JavaScript file (e.g. app.js)
      * and one CSS file (e.g. app.css) if your JavaScript imports CSS.
      */
+
     .addEntry('app', './assets/app.js')
+    .copyFiles({
+        from: 'assets/images/',
+        to: 'images/[name].[hash:8].[ext]',
+        pattern: /\.(png|jpg|jpeg|webp|svg)$/
+    })
+    .copyFiles({
+        from: 'assets/js/',
+        to: 'js/[name].[hash:8].[ext]',
+        pattern: /\.(js|json)$/
+    })
+    .copyFiles({
+        from: 'assets/fonts/',
+        to: 'fonts/[name].[hash:8].[ext]',
+    })
 
     // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
     .splitEntryChunks()
